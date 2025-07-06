@@ -62,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
         verticalRecyclerView3.setAdapter(new AllAdapters(getFilteredList("six"))); // optional
     }
 
+    //======================================= prepare data starts =======================================
     private void prepareData() {
         arrayList = new ArrayList<>();
 
@@ -79,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
 
         item = new HashMap<>();
         item.put("recyclerType", "two");
-        item.put("name", "Shaon");
+        item.put("name", "Monirul Vertical");
         item.put("contact", "01711111111");
         arrayList.add(item);
 
@@ -252,6 +253,10 @@ public class MainActivity extends AppCompatActivity {
         arrayList.add(item);
     }
 
+    //======================================= prepare data ends =======================================
+
+
+    //============================ filtering array list starts =======================================
     private ArrayList<HashMap<String, String>> getFilteredList(String type) {
         ArrayList<HashMap<String, String>> filteredList = new ArrayList<>();
         for (HashMap<String, String> item : arrayList) {
@@ -262,6 +267,10 @@ public class MainActivity extends AppCompatActivity {
         return filteredList;
     }
 
+    //============================ filtering array list ends =======================================
+
+
+    //======================================= adapter starts =======================================
     private class AllAdapters extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         final int ONE = 1, TWO = 2, THREE = 3, FOUR = 4, FIVE = 5, SIX = 6;
@@ -283,20 +292,21 @@ public class MainActivity extends AppCompatActivity {
             else if (type.contains("two")) return TWO;
             else if (type.contains("three")) return THREE;
             else if (type.contains("four")) return FOUR;
-            else if (type.contains("six")) return SIX;
-            else return FIVE;
+            else if (type.contains("five")) return FIVE;
+            else return SIX;
         }
 
         @NonNull
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+            //LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+            LayoutInflater inflater = getLayoutInflater();
             if (viewType == TWO || viewType == FOUR || viewType == SIX) {
-                View view = inflater.inflate(R.layout.vertical_recyclerview_layout, parent, false);
-                return new VerticalViewHolder(view);
+                View myView = inflater.inflate(R.layout.vertical_recyclerview_layout, parent, false);
+                return new VerticalViewHolder(myView);
             } else {
-                View view = inflater.inflate(R.layout.horizontal_recyclerview_layout, parent, false);
-                return new HorizontalViewHolder(view);
+                View myView = inflater.inflate(R.layout.horizontal_recyclerview_layout, parent, false);
+                return new HorizontalViewHolder(myView);
             }
         }
 
@@ -312,7 +322,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        class HorizontalViewHolder extends RecyclerView.ViewHolder {
+        private class HorizontalViewHolder extends RecyclerView.ViewHolder {
             TextView name;
 
             public HorizontalViewHolder(@NonNull View itemView) {
@@ -321,7 +331,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        class VerticalViewHolder extends RecyclerView.ViewHolder {
+        private class VerticalViewHolder extends RecyclerView.ViewHolder {
             TextView name, contact;
 
             public VerticalViewHolder(@NonNull View itemView) {
